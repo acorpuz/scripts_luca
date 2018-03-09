@@ -23,9 +23,10 @@ fi
 
 work_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 csv_dir="${work_dir}/data"
+log_name="run_$(date +"%Y_%m_%d"-%T).log"
 
-echo "Script running in ${work_dir}"
-echo "Using csv directory: ${csv_dir}"
+echo "Script running in ${work_dir}" | tee -a "$log_name"
+echo "Using csv directory: ${csv_dir}" | tee -a "$log_name"
 
 for i in $csv_dir/*.csv; do
 	# estraggo il nome base del file e lo uso per personalizzare 
@@ -34,29 +35,29 @@ for i in $csv_dir/*.csv; do
 	filename=$(basename "$i" .csv)
 	conf_file=configs/$filename.cfg
 	
-	echo "Using csv file: ${i}"
-	echo -e "\tBase name: ${filename}"
-	echo -e "\tcfg file: ${conf_file}"
-	echo "==================================================="
-	echo "Creating cfg file from template ..."
+	echo "Using csv file: ${i}" | tee -a "$log_name"
+	echo -e "\tBase name: ${filename}" | tee -a "$log_name"
+	echo -e "\tcfg file: ${conf_file}" | tee -a "$log_name"
+	echo "===================================================" | tee -a "$log_name"
+	echo "Creating cfg file from template ..." | tee -a "$log_name"
 	
 	# cleanup old cfg files
 	if [ -f "$conf_file" ];
 	then
-		echo -e "\tremoving old cfg file ..."
+		echo -e "\tremoving old cfg file ..." | tee -a "$log_name"
 		rm "$conf_file"
 	fi
 	cp ./template.cfg "$conf_file"
 	sed -i "s/XXX/${filename}/g" "$conf_file"
 	
-	echo "Running program...."
-	echo -e "\tUsing cfg file" "$conf_file"
-	echo -e "\tLogging all data in ./logs/"
+	echo "Running program...." | tee -a "$log_name"
+	echo -e "\tUsing cfg file" "$conf_file" | tee -a "$log_name"
+	echo -e "\tLogging all data in logs/" | tee -a "$log_name"
 	
 	# chiamata al programma
 	./3incomms SIM -np "$csvfile" --config_file "$conf_file"
-	echo "Done simulation for ${filename}"
-    echo "Waiting 5 seconds ..."
+	echo "Done simulation for ${filename}" | tee -a "$log_name"
+    echo "Waiting 5 seconds ..." | tee -a "$log_name"
     sleep 5
-	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
+	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++" | tee -a "$log_name"
 done
