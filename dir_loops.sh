@@ -21,9 +21,11 @@ if [ "$EUID" -ne 0 ]; then
 	exit 1
 fi
 
-csv_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/data
-echo "Script running in " $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-echo "Using csv directory: " $csv_dir
+work_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+csv_dir="${work_dir}/data"
+
+echo "Script running in ${work_dir}"
+echo "Using csv directory: ${csv_dir}"
 
 for i in $csv_dir/*.csv; do
 	# estraggo il nome base del file e lo uso per personalizzare 
@@ -32,27 +34,29 @@ for i in $csv_dir/*.csv; do
 	filename=$(basename "$i" .csv)
 	conf_file=configs/$filename.cfg
 	
-	echo "Using csv file: "$i
-	echo -e "\tBase name: "$filename
-	echo -e "\tcfg file:" $conf_file
+	echo "Using csv file: ${i}"
+	echo -e "\tBase name: ${filename}"
+	echo -e "\tcfg file: ${conf_file}"
 	echo "==================================================="
 	echo "Creating cfg file from template ..."
 	
 	# cleanup old cfg files
-	if [ -f $conf_file ];
+	if [ -f "$conf_file" ];
 	then
 		echo -e "\tremoving old cfg file ..."
-		rm $conf_file
+		rm "$conf_file"
 	fi
-	cp ./template.cfg $conf_file
-	sed -i "s/XXX/$filename/g" $conf_file
+	cp ./template.cfg "$conf_file"
+	sed -i "s/XXX/${filename}/g" "$conf_file"
 	
 	echo "Running program...."
-	echo -e "\tUsing cfg file" $conf_file
+	echo -e "\tUsing cfg file" "$conf_file"
 	echo -e "\tLogging all data in ./logs/"
 	
 	# chiamata al programma
-	./3incomms SIM -np $csvfile --config_file $conf_file
-	echo "Done simulation for $filename"
+	./3incomms SIM -np "$csvfile" --config_file "$conf_file"
+	echo "Done simulation for ${filename}"
+    echo "Waiting 5 seconds ..."
+    sleep 5
 	echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 done
