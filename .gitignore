@@ -1,0 +1,23 @@
+# Ignore generic temp file, undo files, etc...
+.~lock.*
+*.sh~
+*.un~
+*.autosave
+*.swp
+*.swo
+### Eclipse specific
+.settings/
+.properties
+.classpath
+bin/
+build/
+### Pyton specific
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# ingnored specific dirs and files
+not_needed_files/
+configs/*.cfg
+data/*.csv
+
