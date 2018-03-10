@@ -24,8 +24,8 @@ Lo script deve girare con privilegi di root per poter chiamare il programma del 
 se eseguito con privilegi inferiori avvisa ed esce con errore 1.
 
 Lo script cerca di essere esplicito nel comunicare su schermo cosa fa e su che file sta lavorando,
-in ogni caso tutto l'output viene anche girato in un file di logi (`run_<data-ora>.log`) nella directory logs;
-la directory logs conterrà anche i log dei songoli job.
+in ogni caso tutto l'output viene salvato in un file di log (`run_<data-ora>.log`) nella directory logs;
+la directory logs conterrà anche i log dei singoli job.
 
 ### File template.cfg
 
