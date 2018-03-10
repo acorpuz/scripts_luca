@@ -31,3 +31,13 @@ la directory logs conterrà anche i log dei singoli job.
 
 Lo script usa la stringa `xxx` come identificativo di cosa cambiare nel file per generare
 il file di configurazione opportuno.
+
+### script `set_ip.sh`
+
+Helper script che setta in batch gli IP di una serie di interfacce di rete.
+
+_Uso_
+```
+    set_ip.sh eth0,<ip_eth0> eth1,<ip_eth1> [...] 
+```
+
