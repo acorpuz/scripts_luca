@@ -16,8 +16,8 @@ build/
 __pycache__/
 *.py[cod]
 *$py.class
-# ingnored specific dirs and files
+# ignored specific dirs and files
 not_needed_files/
 configs/*.cfg
 data/*.csv
-
+logs/*.log
