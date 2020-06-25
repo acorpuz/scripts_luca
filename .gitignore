@@ -5,6 +5,8 @@
 *.autosave
 *.swp
 *.swo
+.vscode
+.*~
 ### Eclipse specific
 .settings/
 .properties
